@@ -3,6 +3,7 @@ import { Switch } from '@/components/ui/switch';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { ThemeState } from '@/hooks/use-theme';
+import { useLanguage } from '@/hooks/use-language';
 
 interface SettingsPanelProps {
   theme: ThemeState;
@@ -52,6 +53,8 @@ const ColorRow = ({
 );
 
 const SettingsPanel = ({ theme, update, reset }: SettingsPanelProps) => {
+  const { t } = useLanguage();
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -65,25 +68,25 @@ const SettingsPanel = ({ theme, update, reset }: SettingsPanelProps) => {
       </SheetTrigger>
       <SheetContent className="glass w-full border-white/10 sm:max-w-md">
         <SheetHeader>
-          <SheetTitle className="font-display text-2xl">Оформление</SheetTitle>
+          <SheetTitle className="font-display text-2xl">{t('settings.title')}</SheetTitle>
         </SheetHeader>
 
         <div className="mt-8 space-y-8">
           <ColorRow
-            label="Основной цвет"
+            label={t('settings.mainColor')}
             value={theme.color}
             onChange={(v) => update({ color: v })}
           />
           <ColorRow
-            label="Цвет логотипа FACET"
+            label={t('settings.logoColor')}
             value={theme.logoColor}
             onChange={(v) => update({ logoColor: v })}
           />
 
           <div className="flex items-center justify-between rounded-xl border border-white/10 p-4">
             <div>
-              <p className="text-sm font-medium">Градиентное свечение</p>
-              <p className="text-xs text-muted-foreground">Переливы фона</p>
+              <p className="text-sm font-medium">{t('settings.gradient')}</p>
+              <p className="text-xs text-muted-foreground">{t('settings.gradientDesc')}</p>
             </div>
             <Switch
               checked={theme.gradient}
@@ -97,7 +100,7 @@ const SettingsPanel = ({ theme, update, reset }: SettingsPanelProps) => {
             className="w-full gap-2 text-muted-foreground hover:text-foreground"
           >
             <Icon name="RotateCcw" size={16} />
-            Сбросить настройки
+            {t('settings.reset')}
           </Button>
         </div>
       </SheetContent>

@@ -1,21 +1,24 @@
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { useTheme } from '@/hooks/use-theme';
+import { useLanguage } from '@/hooks/use-language';
 import ParticleBackground from '@/components/facet/ParticleBackground';
 import Logo from '@/components/facet/Logo';
 import SettingsPanel from '@/components/facet/SettingsPanel';
+import LanguageSwitcher from '@/components/facet/LanguageSwitcher';
 import MapSelector from '@/components/facet/MapSelector';
 import EloRank from '@/components/facet/EloRank';
 
-const NAV = [
-  { label: 'Главная', href: '#top' },
-  { label: 'Карты', href: '#maps' },
-  { label: 'ELO', href: '#elo' },
-  { label: 'Профиль', href: '#profile' },
-];
-
 const Index = () => {
   const { theme, update, reset } = useTheme();
+  const { t } = useLanguage();
+
+  const NAV = [
+    { label: t('nav.home'), href: '#top' },
+    { label: t('nav.maps'), href: '#maps' },
+    { label: t('nav.elo'), href: '#elo' },
+    { label: t('nav.profile'), href: '#profile' },
+  ];
 
   return (
     <div className="app-bg relative min-h-screen overflow-hidden text-foreground">
@@ -35,7 +38,10 @@ const Index = () => {
             </a>
           ))}
         </nav>
-        <SettingsPanel theme={theme} update={update} reset={reset} />
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <SettingsPanel theme={theme} update={update} reset={reset} />
+        </div>
       </header>
 
       {/* Hero */}
@@ -46,7 +52,7 @@ const Index = () => {
         <div className="animate-fade-in">
           <span className="glass mb-8 inline-flex items-center gap-2 rounded-full border-white/10 px-4 py-1.5 text-xs uppercase tracking-widest text-muted-foreground">
             <span className="h-2 w-2 rounded-full" style={{ background: 'hsl(var(--glow))', boxShadow: '0 0 10px hsl(var(--glow))' }} />
-            Standoff 2 · Premium League
+            {t('hero.badge')}
           </span>
         </div>
 
@@ -55,8 +61,7 @@ const Index = () => {
         </div>
 
         <p className="mt-6 max-w-xl animate-fade-in text-lg text-muted-foreground [animation-delay:150ms]">
-          Соревновательная платформа нового поколения. Играй, поднимайся в рейтинге
-          и добивайся статуса легенды.
+          {t('hero.subtitle')}
         </p>
 
         <div className="mt-10 flex animate-fade-in flex-wrap items-center justify-center gap-4 [animation-delay:300ms]">
@@ -67,7 +72,7 @@ const Index = () => {
           >
             <a href="#elo">
               <Icon name="Zap" size={18} />
-              Начать игру
+              {t('hero.play')}
             </a>
           </Button>
           <Button
@@ -78,7 +83,7 @@ const Index = () => {
           >
             <a href="#maps">
               <Icon name="Map" size={18} />
-              Выбрать карту
+              {t('hero.pickMap')}
             </a>
           </Button>
         </div>
@@ -92,7 +97,7 @@ const Index = () => {
         <div className="glass flex flex-col items-center justify-between gap-4 rounded-2xl border-white/10 p-6 text-center sm:flex-row sm:text-left">
           <div className="flex items-center gap-3">
             <Logo size="sm" />
-            <span className="text-sm text-muted-foreground">© 2026 · Premium Gaming</span>
+            <span className="text-sm text-muted-foreground">© 2026 · {t('footer.tagline')}</span>
           </div>
           <div className="flex items-center gap-3">
             {['Twitch', 'Youtube', 'Send', 'MessageCircle'].map((ic) => (

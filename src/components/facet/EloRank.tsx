@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Slider } from '@/components/ui/slider';
+import { useLanguage } from '@/hooks/use-language';
 import { getFaceitLevel, getRank, rankSpriteStyle } from '@/lib/ranks';
 
 const MIN = 100;
@@ -7,6 +8,7 @@ const MAX = 5000;
 
 const EloRank = () => {
   const [elo, setElo] = useState(1250);
+  const { t } = useLanguage();
 
   const level = useMemo(() => getFaceitLevel(elo), [elo]);
   const rank = useMemo(() => getRank(elo), [elo]);
@@ -18,14 +20,14 @@ const EloRank = () => {
   return (
     <section id="elo" className="mx-auto w-full max-w-5xl px-5 py-20">
       <div className="mb-10 text-center">
-        <p className="mb-2 text-sm font-medium uppercase tracking-[0.3em] accent-text">Прогресс</p>
-        <h2 className="font-display text-4xl font-bold sm:text-5xl">Faceit ELO</h2>
+        <p className="mb-2 text-sm font-medium uppercase tracking-[0.3em] accent-text">{t('elo.eyebrow')}</p>
+        <h2 className="font-display text-4xl font-bold sm:text-5xl">{t('elo.title')}</h2>
       </div>
 
       <div className="glass glow-soft rounded-3xl border border-white/10 p-6 sm:p-10">
         {/* ELO value */}
         <div className="text-center">
-          <p className="text-sm uppercase tracking-widest text-muted-foreground">Текущий ELO</p>
+          <p className="text-sm uppercase tracking-widest text-muted-foreground">{t('elo.current')}</p>
           <p
             className="font-display text-6xl font-bold tabular-nums sm:text-7xl"
             style={{ color: 'hsl(var(--glow))', textShadow: '0 0 40px hsl(var(--glow) / 0.5)' }}
@@ -52,7 +54,7 @@ const EloRank = () => {
               />
             </svg>
             <div className="absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-xs uppercase text-muted-foreground">Level</span>
+              <span className="text-xs uppercase text-muted-foreground">{t('elo.level')}</span>
               <span className="font-display text-4xl font-bold" style={{ color: 'hsl(var(--glow))' }}>
                 {level}
               </span>
@@ -91,7 +93,7 @@ const EloRank = () => {
             />
           </div>
           <div className="text-center sm:text-left">
-            <p className="text-xs uppercase tracking-widest text-muted-foreground">Текущий ранг</p>
+            <p className="text-xs uppercase tracking-widest text-muted-foreground">{t('elo.currentRank')}</p>
             <p className="font-display text-3xl font-bold" style={{ color: rank.color }}>
               {rank.name}
             </p>

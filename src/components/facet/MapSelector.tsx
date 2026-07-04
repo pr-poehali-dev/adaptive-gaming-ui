@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import Icon from '@/components/ui/icon';
+import { useLanguage } from '@/hooks/use-language';
 import { MAPS } from '@/lib/ranks';
 
 const MapSelector = () => {
   const [selected, setSelected] = useState<string>('prison');
+  const { t } = useLanguage();
 
   return (
     <section id="maps" className="mx-auto w-full max-w-6xl px-5 py-20">
       <div className="mb-10 text-center">
-        <p className="mb-2 text-sm font-medium uppercase tracking-[0.3em] accent-text">Арсенал</p>
-        <h2 className="font-display text-4xl font-bold sm:text-5xl">Выбор карты</h2>
+        <p className="mb-2 text-sm font-medium uppercase tracking-[0.3em] accent-text">{t('maps.eyebrow')}</p>
+        <h2 className="font-display text-4xl font-bold sm:text-5xl">{t('maps.title')}</h2>
       </div>
 
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
