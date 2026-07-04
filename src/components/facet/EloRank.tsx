@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Slider } from '@/components/ui/slider';
-import Icon from '@/components/ui/icon';
-import { getFaceitLevel, getRank } from '@/lib/ranks';
+import { getFaceitLevel, getRank, rankSpriteStyle } from '@/lib/ranks';
 
 const MIN = 100;
 const MAX = 5000;
@@ -83,13 +82,13 @@ const EloRank = () => {
           style={{ background: `radial-gradient(120% 120% at 0% 0%, ${rank.color}22, transparent 60%)` }}
         >
           <div
-            className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl"
-            style={{
-              background: `${rank.color}22`,
-              boxShadow: `0 0 30px ${rank.color}55, inset 0 0 20px ${rank.color}33`,
-            }}
+            className="flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/60 bg-white"
+            style={{ boxShadow: `0 0 34px ${rank.color}66` }}
           >
-            <Icon name={rank.icon} size={44} style={{ color: rank.color }} />
+            <div
+              className="animate-scale-in will-animate"
+              style={rankSpriteStyle(rank, 100)}
+            />
           </div>
           <div className="text-center sm:text-left">
             <p className="text-xs uppercase tracking-widest text-muted-foreground">Текущий ранг</p>
