@@ -2,16 +2,23 @@ import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 import { useTheme } from '@/hooks/use-theme';
 import { useLanguage } from '@/hooks/use-language';
+import { useAuth } from '@/hooks/use-auth';
+import { useProfile } from '@/hooks/use-profile';
 import ParticleBackground from '@/components/facet/ParticleBackground';
 import Logo from '@/components/facet/Logo';
 import SettingsPanel from '@/components/facet/SettingsPanel';
 import LanguageSwitcher from '@/components/facet/LanguageSwitcher';
+import AccountMenu from '@/components/facet/AccountMenu';
+import ProfileCard from '@/components/facet/ProfileCard';
+import ProfileEditor from '@/components/facet/ProfileEditor';
 import MapSelector from '@/components/facet/MapSelector';
 import EloRank from '@/components/facet/EloRank';
 
 const Index = () => {
   const { theme, update, reset } = useTheme();
   const { t } = useLanguage();
+  const { user } = useAuth();
+  const { profile } = useProfile();
 
   const NAV = [
     { label: t('nav.home'), href: '#top' },
@@ -41,6 +48,7 @@ const Index = () => {
         <div className="flex items-center gap-2">
           <LanguageSwitcher />
           <SettingsPanel theme={theme} update={update} reset={reset} />
+          <AccountMenu />
         </div>
       </header>
 
@@ -92,8 +100,33 @@ const Index = () => {
       <MapSelector />
       <EloRank />
 
+      {/* Profile section */}
+      <section id="profile" className="mx-auto w-full max-w-3xl px-5 py-20">
+        <div className="mb-10 text-center">
+          <p className="mb-2 text-sm font-medium uppercase tracking-[0.3em] accent-text">Аккаунт</p>
+          <h2 className="font-display text-4xl font-bold sm:text-5xl">Мой профиль</h2>
+        </div>
+
+        {user && profile ? (
+          <>
+            <ProfileCard profile={profile} email={user.email} />
+            <div className="mt-6 flex justify-center">
+              <ProfileEditor profile={profile} />
+            </div>
+          </>
+        ) : (
+          <div className="glass flex flex-col items-center gap-5 rounded-2xl border border-white/10 p-10 text-center">
+            <Icon name="UserCircle2" size={40} className="text-muted-foreground" />
+            <p className="max-w-sm text-muted-foreground">
+              Войди через Google, чтобы настроить свой профиль: аватар, баннер, рамку и медали
+            </p>
+            <AccountMenu />
+          </div>
+        )}
+      </section>
+
       {/* Footer */}
-      <footer id="profile" className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-12 pt-8">
+      <footer className="relative z-10 mx-auto w-full max-w-6xl px-5 pb-12 pt-8">
         <div className="glass flex flex-col items-center justify-between gap-4 rounded-2xl border-white/10 p-6 text-center sm:flex-row sm:text-left">
           <div className="flex items-center gap-3">
             <Logo size="sm" />
